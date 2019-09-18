@@ -1,21 +1,18 @@
 from flask import (
     Flask,
+    url_for,
     render_template,
     jsonify,
     request)
 import pandas as pd
 
 
-app = Flask(__name__)
 
 
+app = Flask(__name__, static_folder = "static", static_url_path= "/static")
 
 
 df = pd.read_csv("Resources/FinalAlcohol.csv")
-
-
-
-
 
 
 @app.route("/api/data")
@@ -43,7 +40,7 @@ def list_countries():
 
 @app.route("/")
 def home():
-    return "Welcome!"
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
