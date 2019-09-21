@@ -6,7 +6,7 @@
 
 var myMap = L.map("map", {
   center: [15.5994, -28.6731],
-  zoom: 3
+  zoom: 8
 });
 
 L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
