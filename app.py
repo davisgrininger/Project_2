@@ -49,6 +49,12 @@ def home():
 def map():
     return render_template("map.html")
 
+@app.route("/bar")
+def bar():
+    return render_template("bar.html")
 
+@app.route("/scatter")
+def scatter():
+    return render_template("scatter.html")
 if __name__ == "__main__":
     app.run()
