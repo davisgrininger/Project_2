@@ -56,5 +56,8 @@ def bar():
 @app.route("/scatter")
 def scatter():
     return render_template("scatter.html")
+
+
+
 if __name__ == "__main__":
     app.run()
