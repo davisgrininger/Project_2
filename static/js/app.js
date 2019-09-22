@@ -164,8 +164,10 @@ function updateYToolTip(chosenYAxis, circlesGroup) {
   return circlesGroup;
 }
 
+
+
 // Retrieve data from the CSV file and execute everything below
-d3.csv("assets/data/FinalAlcohol.csv").then(function(alcoholData) {
+d3.csv("/api/data").then(function(alcoholData) {
   // if (err) throw err;
   
 alcoholData.forEach(function(data) {
