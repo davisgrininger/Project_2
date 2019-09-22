@@ -141,18 +141,7 @@ chartGroup.selectAll("myspirit")
 .attr("height", function(d){return chartHeight - yScale(d.Spiritper_Capita);})
 .attr("fill", "#0066ff")
 //
-// Wine Per Capita Chart
 
-chartGroup.selectAll("mywine")
-.data(data_clean)
-.enter()
-.append("rect")
-.attr("x", function(d){return xScale(d.Country);})
-.attr("y", function(d){return yScale(d.Wineper_Capita);})
-.attr("width", xScale.bandwidth())
-.attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
-.attr("fill", "#830e3c")
-.text("Wine Per Capita")
 
 // var legend = chartGroup.append('g')
 // .attr("class", "legend")
