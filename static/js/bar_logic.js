@@ -1,7 +1,7 @@
 
 // Set dimension of the graph
 var svgWidth = 900;
-var svgHeight = 650;
+var svgHeight = 600;
 
 
 // Define the chart's margins as an object
@@ -30,7 +30,7 @@ var chartGroup = svg.append("g")
 
 
 // Load Data File
-d3.json("/api/data").then(function(data) {
+d3.json("/api/data").then(function(data){
   console.log(data);
 
 var top_10 = data.sort(function(d){
@@ -72,31 +72,19 @@ var data_clean = [
     {Country: "Australia", Beerper_Capita: 261,Spiritper_Capita: 72, Wineper_Capita: 212},
     {Country: "Sweden", Beerper_Capita: 152,Spiritper_Capita: 60, Wineper_Capita: 186}
 ];
-// var stack = d3.stack()
-//     .keys(["Country", "Beerper_Capita", "Spiritper_Capita", "Wineper_Capita"])
-//     .offset(d3.stackOffsetExpand);
-//
-// var series = stack(data_clean);
-// //
-// console.log(series);
-// var dataset = d3.stack()(["Beerper_Capita","Spiritper_Capita", "Wineper_Capita"].map(function(alcohol){
-//     return data_clean.map(function(d){
-//         return {x: d.Country, y: +d[alcohol]};
-//     });
-// }));
 
 //Set X Scale
 var xScale = d3.scaleBand()
     .domain(data_clean.map(d => d.Country))
     .range([0, chartWidth])
-    .padding(0.1)
+    .padding(0.4);
 
 
 //Set Y Scale
 
 var yScale = d3.scaleLinear()
     .domain([0,400])
-    .range([chartHeight, 0])
+    .range([chartHeight, 0]);
 
 
 
@@ -109,18 +97,18 @@ chartGroup.append("g")
 .call(yAxis);
 
 chartGroup.append("text")      // text label for the y axis
-        .attr("x", 400 )
-        .attr("y",  100)
-        .style("text-anchor", "middle")
-        .style("font", "20 px times")
-        .text("Alcohol Consumed Per Capita (in Liters)");
+.attr('x', -250)
+.attr('y', -35)
+.attr('transform', 'rotate(-90)')
+.attr('text-anchor', 'middle')
+.text('Alcohol Consumed Per Capita (in Liters)')
 
 chartGroup.append("text") // text label for the x axis
         .attr("x", 400)
-        .attr("y", 600)
+        .attr("y", 550)
         .style("text-anchor", "middle")
-        .style("font", "20 px times")
-        .text("Top 10 'Happiest' Countries")
+        .style("font", "50px")
+        .text("Top 10 'Happiest' Countries (Ranked by Human Development Index)");
 
 chartGroup.append('g')
 .attr("class", "x axis")
@@ -130,7 +118,6 @@ chartGroup.append('g')
 
 //Bars
 
-//Beer Per Capita Chart
 chartGroup.selectAll("mybeer")
 .data(data_clean)
 .enter()
@@ -139,46 +126,38 @@ chartGroup.selectAll("mybeer")
 .attr("y", function(d){return yScale(d.Beerper_Capita);})
 .attr("width", xScale.bandwidth())
 .attr("height", function(d){return chartHeight - yScale(d.Beerper_Capita);})
-.attr("fill", "#aa1414")
+.attr("fill", "#aa1414");
 
-
+//
 // Spirit Per Capita Chart
-// chartGroup.selectAll("myspirit")
-// .data(data_clean)
-// .enter()
-// .append("rect")
-// .attr("x", function(d){return xScale(d.Country);})
-// .attr("y", function(d){return yScale(d.Spiritper_Capita);})
-// .attr("width", xScale.bandwidth())
-// .attr("height", function(d){return chartHeight - yScale(d.Spiritper_Capita);})
-// .attr("fill", "#0066ff")
 
-
-// chartGroup.selectAll("mywine")
-// .data(data_clean)
-// .enter()
-// .append("rect")
-// .attr("x", function(d){return xScale(d.Country);})
-// .attr("y", function(d){return yScale(d.Wineper_Capita);})
-// .attr("width", xScale.bandwidth())
-// .attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
-// .attr("fill", "#830e3c")
-// .text("Wine Per Capita")
-
-var legend = chartGroup.append('g')
-.attr("class", "legend")
-.attr("transform", "translate(50,30)")
-.style("font-size", "12 px")
-.call(d3.legend)
-
+chartGroup.selectAll("myspirit")
+.data(data_clean)
+.enter()
+.append("rect")
+.attr("x", function(d){return xScale(d.Country);})
+.attr("y", function(d){return yScale(d.Spiritper_Capita);})
+.attr("width", xScale.bandwidth())
+.attr("height", function(d){return chartHeight - yScale(d.Spiritper_Capita);})
+.attr("fill", "#0066ff")
 //
-// //Tool Tips
-//
-// var toolTip = d3.select("#bubble_area")
-// .append("div")
-// .attr("opacity", 0)
-// .style("background-color", "black")
-// .style("border-radius", "5px")
-// .style("padding", "10px")
-// .style("color", "white")
+// Wine Per Capita Chart
+
+chartGroup.selectAll("mywine")
+.data(data_clean)
+.enter()
+.append("rect")
+.attr("x", function(d){return xScale(d.Country);})
+.attr("y", function(d){return yScale(d.Wineper_Capita);})
+.attr("width", xScale.bandwidth())
+.attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
+.attr("fill", "#830e3c")
+.text("Wine Per Capita")
+
+// var legend = chartGroup.append('g')
+// .attr("class", "legend")
+// .attr("transform", "translate(50,30)")
+// .style("font-size", "12 px")
+// .call(d3.legend);
+
 });
