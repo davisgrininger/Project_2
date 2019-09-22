@@ -129,7 +129,7 @@ chartGroup.selectAll("mywine")
 .attr("width", xScale.bandwidth())
 .attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
 .attr("fill", "#830e3c")
-.attr("opacity", "0.75")
+.attr("opacity", ".85");
 
 
 chartGroup.selectAll("mybeer")
@@ -141,7 +141,7 @@ chartGroup.selectAll("mybeer")
 .attr("width", xScale.bandwidth())
 .attr("height", function(d){return chartHeight - yScale(d.Beerper_Capita);})
 .attr("fill", "#aa1414")
-.attr("opacity", "0.50")
+.attr("opacity", "0.25");
 
 //
 // Spirit Per Capita Chart
@@ -155,6 +155,7 @@ chartGroup.selectAll("myspirit")
 .attr("width", xScale.bandwidth())
 .attr("height", function(d){return chartHeight - yScale(d.Spiritper_Capita);})
 .attr("fill", "#0066ff")
+.attr("opacity", "0.35");
 //
 
 
