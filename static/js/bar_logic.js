@@ -118,6 +118,20 @@ chartGroup.append('g')
 
 //Bars
 
+// Wine Per Capita Chart
+
+chartGroup.selectAll("mywine")
+.data(data_clean)
+.enter()
+.append("rect")
+.attr("x", function(d){return xScale(d.Country);})
+.attr("y", function(d){return yScale(d.Wineper_Capita);})
+.attr("width", xScale.bandwidth())
+.attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
+.attr("fill", "#830e3c")
+.attr("opacity", "0.75")
+
+
 chartGroup.selectAll("mybeer")
 .data(data_clean)
 .enter()
@@ -126,7 +140,8 @@ chartGroup.selectAll("mybeer")
 .attr("y", function(d){return yScale(d.Beerper_Capita);})
 .attr("width", xScale.bandwidth())
 .attr("height", function(d){return chartHeight - yScale(d.Beerper_Capita);})
-.attr("fill", "#aa1414");
+.attr("fill", "#aa1414")
+.attr("opacity", "0.50")
 
 //
 // Spirit Per Capita Chart
