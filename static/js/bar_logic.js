@@ -99,9 +99,6 @@ var yScale = d3.scaleLinear()
     .range([chartHeight, 0])
 
 
-    // .domain(data_clean.map(d => d.Beerper_Capita))
-    // .range([chartHeight, 0]);
-
 
 //Create axes
 var yAxis = d3.axisLeft(yScale);
@@ -118,7 +115,7 @@ chartGroup.append("text")      // text label for the y axis
         .style("font", "20 px times")
         .text("Alcohol Consumed Per Capita (in Liters)");
 
-chartGroup.append("text") // text label for the x axis 
+chartGroup.append("text") // text label for the x axis
         .attr("x", 400)
         .attr("y", 600)
         .style("text-anchor", "middle")
@@ -168,7 +165,11 @@ chartGroup.selectAll("mybeer")
 // .attr("fill", "#830e3c")
 // .text("Wine Per Capita")
 
-
+var legend = chartGroup.append('g')
+.attr("class", "legend")
+.attr("transform", "translate(50,30)")
+.style("font-size", "12 px")
+.call(d3.legend)
 
 //
 // //Tool Tips
