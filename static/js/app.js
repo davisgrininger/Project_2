@@ -413,7 +413,7 @@ alcoholData.forEach(function(data) {
             .classed("inactive", true);
         }
 
-        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Wine_PerCapita") {
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Spirit_PerCapita") {
           happinessScoreLabel
             .classed("active", true)
             .classed("inactive", false);
@@ -476,7 +476,7 @@ alcoholData.forEach(function(data) {
             .classed("inactive", false);
         }
 
-        else {
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Wine_PerCapita") {
           happinessScoreLabel
             .classed("active", true)
             .classed("inactive", false);
@@ -693,7 +693,7 @@ alcoholData.forEach(function(data) {
             .classed("inactive", false);
         }
 
-        else {
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Wine_PerCapita") {
           happinessScoreLabel
             .classed("active", true)
             .classed("inactive", false);
