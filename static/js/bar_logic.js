@@ -115,7 +115,7 @@ var layout = {
 legend: {
     font: {
         family: 'Oswald',
-        size: 10,
+        size: 14,
         color: 'black'
     },
     bgcolor: "lightgray",
