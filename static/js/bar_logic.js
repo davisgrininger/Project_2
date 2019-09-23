@@ -1,34 +1,4 @@
 
-// Set dimension of the graph
-var svgWidth = 900;
-var svgHeight = 600;
-
-
-// Define the chart's margins as an object
-var chartMargin = {
-  top: 30,
-  right: 30,
-  bottom: 70,
-  left: 80
-};
-
-//Define dimensionks of the chart area
-var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
-
-var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
-
-
-// Select body, append SVG area to it, and set the dimensions
-var svg = d3
-  .select("#bar")
-  .append("svg")
-  .attr("width", svgWidth)
-  .attr("height", svgHeight);
-
-var chartGroup = svg.append("g")
-                .attr("transform", "translate(" + chartMargin.left + "," + chartMargin.top + ")");
-
-
 // Load Data File
 d3.json("/api/data").then(function(data){
   console.log(data);
@@ -73,96 +43,88 @@ var data_clean = [
     {Country: "Sweden", Beerper_Capita: 152,Spiritper_Capita: 60, Wineper_Capita: 186}
 ];
 
-//Set X Scale
-var xScale = d3.scaleBand()
-    .domain(data_clean.map(d => d.Country))
-    .range([0, chartWidth])
-    .padding(0.4);
+
+var beer_trace =
+    {
+    x: ["Denmark", "Switzerland", "Iceland", "Norway", "Finland", "Canada", "Netherlands", "New Zealand", "Australia", "Sweden"],
+    y: [224, 185, 233, 169, 263, 240, 251, 203, 261, 152],
+    name: "Beer",
+    marker: {color: 'steelblue'},
+    type: "bar"
+};
+
+var spirit_trace =
+    {
+    x: ["Denmark", "Switzerland", "Iceland", "Norway", "Finland", "Canada", "Netherlands", "New Zealand", "Australia", "Sweden"],
+    y: [81, 100, 61, 71, 133, 122, 88, 79, 72, 60],
+    name: "Spirit/Liquor",
+    marker: {color: 'lightgreen'},
+    type: "bar"
+};
 
 
-//Set Y Scale
+var wine_trace =
+    {
+    x: ["Denmark", "Switzerland", "Iceland", "Norway", "Finland", "Canada", "Netherlands", "New Zealand", "Australia", "Sweden"],
+    y: [278, 280, 78, 129, 97, 100, 190, 175, 212, 186],
+    name: "Wine",
+    marker: {color: 'lightcoral'},
+    type: "bar"
+};
 
-var yScale = d3.scaleLinear()
-    .domain([0,400])
-    .range([chartHeight, 0]);
+var data = [beer_trace, spirit_trace, wine_trace];
 
-
-
-//Create axes
-var yAxis = d3.axisLeft(yScale);
-var xAxis = d3.axisBottom(xScale);
-
-chartGroup.append("g")
-.attr("class", "y axis")
-.call(yAxis);
-
-chartGroup.append("text")      // text label for the y axis
-.attr('x', -250)
-.attr('y', -35)
-.attr('transform', 'rotate(-90)')
-.attr('text-anchor', 'middle')
-.text('Alcohol Consumed Per Capita (in Liters)')
-
-chartGroup.append("text") // text label for the x axis
-        .attr("x", 400)
-        .attr("y", 550)
-        .style("text-anchor", "middle")
-        .style("font", "50px")
-        .text("Top 10 'Happiest' Countries (Ranked by Human Development Index)");
-
-chartGroup.append('g')
-.attr("class", "x axis")
-.attr("transform", "translate(0, "+ chartHeight + ")")
-.call(xAxis);
+var layout = {
+    title: {
+        text:"Alcohol Consumption by Type in the Ten 'Happiest' Countries",
+        font: {
+      family: 'Arial',
+      size: 22
+  }},
+    xaxis: {
+        title: {
+            text: "Top Ten 'Happiest' Countries (Ranked by Human Development Index)",
+        font: {
+      family: 'Oswald',
+      size: 18,
+  }},
+        tickfont: {
+            family: 'Oswald',
+            size: 15,
+            color: 'rbg(107,107,107)'
+  },
 
 
-//Bars
+},
+    yaxis: {
+        title: {
+            text:"Alcohol Consumption Per Capita (in Liters)",
+        font: {
+      family: 'Oswald',
+      size: 18,
 
-// Wine Per Capita Chart
+  }},
+        titlefont: {
+            family: 'Oswald',
+            size: 15,
+            color: 'rbg(107,107,107)'
+        }
+},
+ barmode: "stack",
 
-chartGroup.selectAll("mywine")
-.data(data_clean)
-.enter()
-.append("rect")
-.attr("x", function(d){return xScale(d.Country);})
-.attr("y", function(d){return yScale(d.Wineper_Capita);})
-.attr("width", xScale.bandwidth())
-.attr("height", function(d){return chartHeight - yScale(d.Wineper_Capita);})
-.attr("fill", "#830e3c")
-.attr("opacity", "1");
+legend: {
+    font: {
+        family: 'Oswald',
+        size: 10,
+        color: 'black'
+    },
+    bgcolor: "lightgray",
+    bordercolor: "white",
+    borderwidth: 2
 
+}
 
-chartGroup.selectAll("mybeer")
-.data(data_clean)
-.enter()
-.append("rect")
-.attr("x", function(d){return xScale(d.Country);})
-.attr("y", function(d){return yScale(d.Beerper_Capita);})
-.attr("width", xScale.bandwidth())
-.attr("height", function(d){return chartHeight - yScale(d.Beerper_Capita);})
-.attr("fill", "#aa1414")
-.attr("fillOpacity", "0.25");
-
-//
-// Spirit Per Capita Chart
-
-chartGroup.selectAll("myspirit")
-.data(data_clean)
-.enter()
-.append("rect")
-.attr("x", function(d){return xScale(d.Country);})
-.attr("y", function(d){return yScale(d.Spiritper_Capita);})
-.attr("width", xScale.bandwidth())
-.attr("height", function(d){return chartHeight - yScale(d.Spiritper_Capita);})
-.attr("fill", "#0066ff")
-.attr("opacity", "0.35");
-//
-
-
-// var legend = chartGroup.append('g')
-// .attr("class", "legend")
-// .attr("transform", "translate(50,30)")
-// .style("font-size", "12 px")
-// .call(d3.legend);
+};
+Plotly.newPlot("bar", data, layout);
 
 });
