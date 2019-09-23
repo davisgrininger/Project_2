@@ -80,7 +80,7 @@ function renderYAxes(newYScale, yAxis) {
 
 // function used for updating circles group with a transition to
 // new circles (for x and y axes)
-function renderXCircles(circlesGroup, newXScale, chosenXaxis) {
+function renderXCircles(circlesGroup, newXScale, chosenXAxis) {
 
   circlesGroup.transition()
     .duration(1000)
@@ -89,7 +89,7 @@ function renderXCircles(circlesGroup, newXScale, chosenXaxis) {
   return circlesGroup;
 }
 
-function renderYCircles(circlesGroup, newYScale, chosenYaxis) {
+function renderYCircles(circlesGroup, newYScale, chosenYAxis) {
 
   circlesGroup.transition()
     .duration(1000)
@@ -99,23 +99,51 @@ function renderYCircles(circlesGroup, newYScale, chosenYaxis) {
 }
 
 // function used for updating circles group with new tooltip (x axes)
-function updateXToolTip(chosenXAxis, circlesGroup) {
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
-  if (chosenXAxis === "HappinessScore") {
-    var label = "Happiness Score:";
+  if (chosenXAxis === "HappinessScore" && chosenYAxis === "Beer_PerCapita") {
+    var xlabel = "Happiness Score:";
+    var ylabel = "Beer Per Capita:";
   }
-  else if (chosenXAxis === "HDI") {
-    var label = "HDI:";
+  else if (chosenXAxis === "HDI" && chosenYAxis === "Beer_PerCapita") {
+    var xlabel = "HDI:";
+    var ylabel = "Beer Per Capita:";
+  }
+  else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Beer_PerCapita") {
+    var xlabel = "GDP Per Capita:";
+    var ylabel = "Beer Per Capita:";
+  }
+  else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Spirit_PerCapita") {
+    var xlabel = "Happiness Score:";
+    var ylabel = "Spirit Per Capita";
+  }
+  else if (chosenXAxis === "HDI" && chosenYAxis === "Spirit_PerCapita") {
+    var xlabel = "HDI:";
+    var ylabel = "Spirit Per Capita";
+  }
+  else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Spirit_PerCapita") {
+    var xlabel = "GDP Per Capita:";
+    var ylabel = "Spirit Per Capita";
+  }
+  else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Wine_PerCapita") {
+    var xlabel = "HDI:";
+    var ylabel = "Wine Per Capita:";
+  }
+  else if (chosenXAxis === "HDI" && chosenYAxis === "Wine_PerCapita") {
+    var xlabel = "HDI:";
+    var ylabel = "Wine Per Capita:";
   }
   else {
-    var label = "GDP Per Capita:";
+    var xlabel = "GDP Per Capita:";
+    var ylabel = "Wine Per Capita:";
   }
+  
 
   var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.Country}<br>${label} ${d[chosenXAxis]}`);
+      return (`${d.Country}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
     });
 
   circlesGroup.call(toolTip);
@@ -130,41 +158,6 @@ function updateXToolTip(chosenXAxis, circlesGroup) {
 
   return circlesGroup;
 }
-
-// function used for updating circles group with new tooltip (y axes)
-function updateYToolTip(chosenYAxis, circlesGroup) {
-
-  if (chosenYAxis === "Beer_PerCapita") {
-    var label = "Beer per Capita";
-  }
-  else if (chosenYAxis === "Spirit_PerCapita") {
-    var label = "Spirit Per Capita:";
-  }
-  else {
-    var label = "Wine Per Capita:";
-  }
-
-  var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([80, -60])
-    .html(function(d) {
-      return (`${d.Country}<br>${label} ${d[chosenYAxis]}`);
-    });
-
-  circlesGroup.call(toolTip);
-
-  circlesGroup.on("mouseover", function(data) {
-    toolTip.show(data);
-  })
-    // onmouseout event
-    .on("mouseout", function(data, index) {
-      toolTip.hide(data);
-    });
-
-  return circlesGroup;
-}
-
-
 
 // Retrieve data from the CSV file and execute everything below
 d3.json("/scatterplot/data").then(function(alcoholData) {
@@ -287,7 +280,7 @@ alcoholData.forEach(function(data) {
   //   .text("Number of Billboard 500 Hits");
 
   // updateToolTip function above csv import
-  var circlesGroup = updateXToolTip(chosenXAxis, circlesGroup);
+  var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
   // x axis labels event listener
   xLabelsGroup.selectAll("text")
@@ -312,43 +305,196 @@ alcoholData.forEach(function(data) {
         circlesGroup = renderXCircles(circlesGroup, xLinearScale, chosenXAxis);
 
         // updates tooltips with new info
-        circlesGroup = updateXToolTip(chosenXAxis, circlesGroup);
+        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
         // changes classes to change bold text
-        if (chosenXAxis === "HDI") {
-          HDILabel
-            .classed("active", true)
-            .classed("inactive", false);
+        if (chosenXAxis === "HDI" && chosenYAxis === "Beer_PerCapita") {
           happinessScoreLabel
             .classed("active", false)
             .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
           GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
             .classed("active", false)
             .classed("inactive", true);
         }
 
-        else if (chosenXAxis === "GDP_PerCapita") {
-          GDPPerCapitaLabel
-            .classed("active", true)
-            .classed("inactive", false);
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Beer_PerCapita") {
           happinessScoreLabel
             .classed("active", false)
             .classed("inactive", true);
           HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          beerPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
             .classed("active", false)
             .classed("inactive", true);
         }
         
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Beer_PerCapita") {
+          happinessScoreLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        
+        else if (chosenXAxis === "HDI" && chosenYAxis === "Spirit_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Spirit_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Wine_PerCapita") {
+          happinessScoreLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "HDI" && chosenYAxis === "Wine_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Wine_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+
         else {
           happinessScoreLabel
             .classed("active", true)
-            .classed("inactive", false)
+            .classed("inactive", false);
           HDILabel
             .classed("active", false)
-            .classed("inactive", true)
+            .classed("inactive", true);
           GDPPerCapitaLabel
             .classed("active", false)
-            .classed("inactive", true)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
         }
 
       }
@@ -377,10 +523,18 @@ alcoholData.forEach(function(data) {
         circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis);
 
         // updates tooltips with new info
-        circlesGroup = updateYToolTip(chosenYAxis, circlesGroup);
+        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
-        // changes classes to change bold text
-        if (chosenYAxis === "Beer_PerCapita") {
+        if (chosenXAxis === "HDI" && chosenYAxis === "Beer_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
           beerPerCapitaLabel
             .classed("active", true)
             .classed("inactive", false);
@@ -392,11 +546,20 @@ alcoholData.forEach(function(data) {
             .classed("inactive", true);
         }
 
-        else if (chosenYAxis === "Spirit_PerCapita") {
-          spiritPerCapitaLabel
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Beer_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
             .classed("active", true)
             .classed("inactive", false);
           beerPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          spiritPerCapitaLabel
             .classed("active", false)
             .classed("inactive", true);
           winePerCapitaLabel
@@ -404,16 +567,151 @@ alcoholData.forEach(function(data) {
             .classed("inactive", true);
         }
         
-        else {
-          winePerCapitaLabel
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Beer_PerCapita") {
+          happinessScoreLabel
             .classed("active", true)
-            .classed("inactive", false)
-          beerPerCapitaLabel
+            .classed("inactive", false);
+          HDILabel
             .classed("active", false)
-            .classed("inactive", true)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
           spiritPerCapitaLabel
             .classed("active", false)
-            .classed("inactive", true)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        
+        else if (chosenXAxis === "HDI" && chosenYAxis === "Spirit_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Spirit_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "HappinessScore" && chosenYAxis === "Spirit_PerCapita") {
+          happinessScoreLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          winePerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+
+        else if (chosenXAxis === "HDI" && chosenYAxis === "Wine_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", true)
+            .classed("inactive", false);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+
+        else if (chosenXAxis === "GDP_PerCapita" && chosenYAxis === "Wine_PerCapita") {
+          happinessScoreLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+
+        else {
+          happinessScoreLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          HDILabel
+            .classed("active", false)
+            .classed("inactive", true);
+          GDPPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          beerPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          spiritPerCapitaLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          winePerCapitaLabel
+            .classed("active", true)
+            .classed("inactive", false);
         }
 
       }
