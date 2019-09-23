@@ -167,7 +167,7 @@ function updateYToolTip(chosenYAxis, circlesGroup) {
 
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("/api/data").then(function(alcoholData) {
+d3.json("/scatterplot/data").then(function(alcoholData) {
   // if (err) throw err;
   
 alcoholData.forEach(function(data) {
@@ -218,7 +218,7 @@ alcoholData.forEach(function(data) {
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("r", 15)
+    .attr("r", 13)
     .attr("fill", "pink")
     .attr("opacity", ".6");
     // .append("text").text(d => d.Abbreviation);
