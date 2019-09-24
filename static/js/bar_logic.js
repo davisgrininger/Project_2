@@ -70,7 +70,7 @@ d3.json("/api/data").then(function(data){
     }},
       xaxis: {
           title: {
-              text: "Top Ten 'Happiest' Countries (Ranked by Human Development Index)",
+              text: "Top Ten Ranked by Human Development Index)",
           font: {
         family: 'Oswald',
         size: 18,

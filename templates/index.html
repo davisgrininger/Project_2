@@ -13,6 +13,12 @@
 
   <!--D3 cdn-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -20,21 +26,26 @@
 <body>
 
   <div class="jumbotron">
-      <h1 class="display-4">Alcohol Consuption vs. Happiness</h1>
+      <h1  id="background" class="display-4">Alcohol Consuption vs. Happiness</h1>
       <p class="lead">Alex Lao, Daniel Conde, Davis Grininger</p>
       <hr class="my-4">
       <p>An analysis of how alcohol consuption correlates with happiness, human development, and GDP around the world.</p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button"></a>
-      </p>
+   
     </div>
+  
   <div>
-    <ul>
-    <li><a href="/map">MAP</a></li>
-    <li><a href="/scatter">Scatter</a></li>
-    <li><a href="/bar">BAR</a></li>
-    </ul>
+      Alcohol has always played a role throughout society, but that role has not always been apparent. In some cases, alcohol remains one of the most commonly used drugs throughout the world and is responsible for impairing both short and long-term cognitive ability and decision making. In others, however, alcohol plays a huge part in many religious, recreational, and cultural events.  In the end, we wanted to get an idea of the significance of alcohol in countries across the world by seeing how much alcohol is consumed by each country and observing any possible correlations to human behavior.
   </div>
+  <div>
+      <div class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Visuals<span class="caret"></span></a>
+        <div><a href="https://www.kaggle.com/eidanch/counties-geographic-coordinates/downloads/counties-geographic-coordinates.zip/1">Source</a></div>
+        <ul class="dropdown-menu">
+            <li><a href="/map">Map</a></li>
+            <li><a href="/scatter">Scatter Plot</a></li>
+            <li><a href="/bar">Bar Chart</a></li>
+        </ul>
+      </div>
+    </div>
 
 </body>
 </html>
