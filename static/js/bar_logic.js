@@ -30,19 +30,6 @@ let wine = top_10.map(a=> a["Wine per capita"]);
 console.log(wine);
 
 
-var data_clean = [
-    {Country: "Demark", Beerper_Capita: 224, Spiritper_Capita: 81, Wineper_Capita: 278},
-    {Country: "Switzerland", Beerper_Capita: 185, Spiritper_Capita: 100, Wineper_Capita: 280},
-    {Country: "Iceland", Beerper_Capita: 223, Spiritper_Capita: 61, Wineper_Capita: 78},
-    {Country: "Norway", Beerper_Capita: 169, Spiritper_Capita: 71, Wineper_Capita: 129},
-    {Country: "Finland", Beerper_Capita: 263,Spiritper_Capita: 133, Wineper_Capita: 97},
-    {Country: "Canada", Beerper_Capita: 240,Spiritper_Capita: 122, Wineper_Capita: 100},
-    {Country: "Netherlands", Beerper_Capita: 251,Spiritper_Capita: 88, Wineper_Capita: 190},
-    {Country: "New Zealand", Beerper_Capita: 203,Spiritper_Capita: 79, Wineper_Capita: 175},
-    {Country: "Australia", Beerper_Capita: 261,Spiritper_Capita: 72, Wineper_Capita: 212},
-    {Country: "Sweden", Beerper_Capita: 152,Spiritper_Capita: 60, Wineper_Capita: 186}
-];
-
 
 var beer_trace =
     {
