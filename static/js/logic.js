@@ -104,7 +104,8 @@ let wine = data.map(a=> a["Wine per capita"]);
 let hdi = data.map(a=> a["HDI"]);
 //console.log(hdi);
 
-let gdp = data.map(a=> a["GDP per Capita"]);
+let gdp = data.map(a=> a["GDP per Capita"] <= 110 ? a["GDP per Capita"] : 5);
+
 //console.log(gdp);
 
 let happiness = data.map(a=> a["Happiness Score"]);
@@ -203,7 +204,7 @@ console.log(location);
         color: color,
         fillColor: color,
         radius: happiness[i]*20000
-      })
+      }).bindPopup("<h1>" + country[i] + "</h1> <hr> <h3>Beer Per Capita: " + beer[i] + "</h3>"+ "</h1> <hr> <h3>Wine Per Capita: " + wine[i] + "</h3>"+ "</h1> <hr> <h3>Spirits Per Capita: " + spirit[i] + "</h3>")
     );
 
     gdpMarkers.push(
@@ -212,8 +213,8 @@ console.log(location);
         fillOpacity: 0.85,
         color: gdpcolor,
         fillColor: gdpcolor,
-        radius: gdp[i] * 900
-      })
+        radius: (gdp[i] * 200000)/88
+      }).bindPopup("<h1>" + country[i] + "</h1> <hr> <h3>Beer Per Capita: " + beer[i] + "</h3>"+ "</h1> <hr> <h3>Wine Per Capita: " + wine[i] + "</h3>"+ "</h1> <hr> <h3>Spirits Per Capita: " + spirit[i] + "</h3>")
     );
   
     hdiMarkers.push(
@@ -223,7 +224,7 @@ console.log(location);
         color: hdicolor,
         fillColor: hdicolor,
         radius: (hdi[i] * 20000)/124
-      })
+      }).bindPopup("<h1>" + country[i] + "</h1> <hr> <h3>Beer Per Capita: " + beer[i] + "</h3>"+ "</h1> <hr> <h3>Wine Per Capita: " + wine[i] + "</h3>"+ "</h1> <hr> <h3>Spirits Per Capita: " + spirit[i] + "</h3>")
     );
   }
   ///////////
@@ -242,7 +243,7 @@ console.log(location);
   var myMap = L.map("map", {
     center: [15.5994, -28.6731],
     zoom: 3,
-    layers: [happiness_marker, hdi_marker, gdp_markers]
+    layers: [happiness_marker]
   });
 
   L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
